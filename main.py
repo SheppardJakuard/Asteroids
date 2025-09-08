@@ -9,9 +9,11 @@ def main():
     updatables = pygame.sprite.Group()
     drawables = pygame.sprite.Group()
     asteroids = pygame.sprite.Group()
+
     Asteroid.containers = (asteroids, updatables, drawables)
     Player.containers = (updatables,drawables)
     AsteroidField.containers = (updatables,)
+
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
     clock = pygame.time.Clock()
     dt = 0
@@ -28,6 +30,12 @@ def main():
 
         for sprite in drawables:
             sprite.draw(screen)
+
+        for a in asteroids:
+            if player.collision(a):
+                print("Game over!")
+                pygame.quit()
+                return
 
         pygame.display.flip()
         dt = clock.tick(60) / 1000
